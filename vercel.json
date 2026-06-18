@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "public": true,
+  "framework": null,
+  "outputDirectory": "public",
+  "functions": {
+    "api/health.js": {
+      "maxDuration": 10
+    },
+    "api/chat.js": {
+      "maxDuration": 30
+    },
+    "api/image.js": {
+      "maxDuration": 60
+    }
+  }
+}

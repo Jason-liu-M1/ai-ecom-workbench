@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 电商工作台 · MVP</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-icon">⚡</span>
+      <span class="brand-name">AI 电商工作台</span>
+    </div>
+    <nav class="nav">
+      <button class="nav-item active" data-module="image">
+        <span class="nav-icon">🖼️</span>
+        <span>AI 作图</span>
+      </button>
+      <button class="nav-item" data-module="listing">
+        <span class="nav-icon">📝</span>
+        <span>Listing 生成</span>
+      </button>
+      <button class="nav-item" data-module="copy">
+        <span class="nav-icon">✍️</span>
+        <span>文案工坊</span>
+      </button>
+      <button class="nav-item" data-module="analysis">
+        <span class="nav-icon">📊</span>
+        <span>竞品分析</span>
+      </button>
+      <button class="nav-item" id="btnHistory" data-module="history">
+        <span class="nav-icon">📜</span>
+        <span>历史记录</span>
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="plan-badge">✨ MVP Demo</div>
+      <p class="sidebar-tip">Amazon · Shopify · TikTok Shop</p>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <main class="main">
+    <!-- Header -->
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <h1 class="page-title" id="pageTitle">🖼️ AI 作图工坊</h1>
+        <span class="page-sub" id="pageSub">输入产品信息，一键生成高质量商品图</span>
+      </div>
+    </header>
+
+    <!-- Module: AI Image -->
+    <section class="module" id="mod-image">
+      <div class="card-grid">
+        <div class="card input-card">
+          <h3 class="card-title">📋 输入参数</h3>
+          <div class="form-group">
+            <label>产品描述 <span class="required">*</span></label>
+            <textarea id="img-desc" placeholder="例：高端真皮钱包，棕色，双折，内含8个卡槽，金属拉链..." rows="4"></textarea>
+          </div>
+          <div class="form-group">
+            <label>图片风格</label>
+            <div class="style-selector">
+              <button class="style-btn active" data-style="white">🏳️ 电商白底图</button>
+              <button class="style-btn" data-style="lifestyle">🌿 生活场景图</button>
+              <button class="style-btn" data-style="luxury">💎 高端广告图</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>生成数量</label>
+            <div class="qty-selector">
+              <button class="qty-btn active" data-qty="1">1张</button>
+              <button class="qty-btn" data-qty="2">2张</button>
+              <button class="qty-btn" data-qty="4">4张</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>产品参考图（可选）</label>
+            <div class="upload-zone" id="uploadZone">
+              <span class="upload-icon">📁</span>
+              <span>拖拽或点击上传</span>
+              <input type="file" id="fileInput" accept="image/*" hidden />
+            </div>
+          </div>
+          <button class="btn-primary" id="btnGenImage">
+            <span class="btn-icon">✨</span> 生成商品图
+          </button>
+        </div>
+
+        <div class="card result-card">
+          <h3 class="card-title">🎨 生成结果</h3>
+          <div class="result-placeholder" id="imgResultPlaceholder">
+            <div class="placeholder-icon">🖼️</div>
+            <p>填写左侧参数后点击「生成商品图」</p>
+          </div>
+          <div class="img-grid hidden" id="imgGrid"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Module: Listing -->
+    <section class="module hidden" id="mod-listing">
+      <div class="card-grid">
+        <div class="card input-card">
+          <h3 class="card-title">📋 输入参数</h3>
+          <div class="form-group">
+            <label>产品名称 <span class="required">*</span></label>
+            <input type="text" id="lst-name" placeholder="例：Premium Leather Bifold Wallet" />
+          </div>
+          <div class="form-group">
+            <label>核心卖点 <span class="required">*</span>（每行一个，3–5个）</label>
+            <textarea id="lst-points" placeholder="耐用真皮材质，使用寿命5年以上&#10;RFID 防盗刷技术&#10;超薄设计，不撑变口袋&#10;8个卡槽+1个隐藏暗格&#10;精美礼盒包装，送礼首选" rows="5"></textarea>
+          </div>
+          <div class="form-group">
+            <label>目标市场</label>
+            <div class="market-selector">
+              <button class="market-btn active" data-market="US">🇺🇸 美国</button>
+              <button class="market-btn" data-market="EU">🇪🇺 欧洲</button>
+              <button class="market-btn" data-market="JP">🇯🇵 日本</button>
+            </div>
+          </div>
+          <button class="btn-primary" id="btnGenListing">
+            <span class="btn-icon">✨</span> 生成 Listing
+          </button>
+        </div>
+
+        <div class="card result-card">
+          <h3 class="card-title">📄 生成结果</h3>
+          <div class="result-placeholder" id="lstResultPlaceholder">
+            <div class="placeholder-icon">📝</div>
+            <p>填写左侧参数后点击「生成 Listing」</p>
+          </div>
+          <div class="listing-result hidden" id="listingResult"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Module: Copy -->
+    <section class="module hidden" id="mod-copy">
+      <div class="card-grid">
+        <div class="card input-card">
+          <h3 class="card-title">📋 输入参数</h3>
+          <div class="form-group">
+            <label>产品信息 <span class="required">*</span></label>
+            <textarea id="copy-info" placeholder="例：真皮男士钱包，支持RFID防盗，超薄设计，适合商务人士..." rows="4"></textarea>
+          </div>
+          <div class="form-group">
+            <label>使用场景（可选）</label>
+            <input type="text" id="copy-scene" placeholder="例：商务出行、节日礼物、日常使用..." />
+          </div>
+          <div class="form-group">
+            <label>文案平台</label>
+            <div class="platform-selector">
+              <label class="check-item"><input type="checkbox" checked /> TikTok</label>
+              <label class="check-item"><input type="checkbox" checked /> Facebook</label>
+              <label class="check-item"><input type="checkbox" checked /> Slogan</label>
+            </div>
+          </div>
+          <button class="btn-primary" id="btnGenCopy">
+            <span class="btn-icon">✨</span> 生成文案
+          </button>
+        </div>
+
+        <div class="card result-card">
+          <h3 class="card-title">✍️ 生成结果</h3>
+          <div class="result-placeholder" id="copyResultPlaceholder">
+            <div class="placeholder-icon">✍️</div>
+            <p>填写左侧参数后点击「生成文案」</p>
+          </div>
+          <div class="copy-result hidden" id="copyResult"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Module: Analysis -->
+    <section class="module hidden" id="mod-analysis">
+      <div class="card-grid">
+        <div class="card input-card">
+          <h3 class="card-title">📋 输入参数</h3>
+          <div class="form-group">
+            <label>产品名称 <span class="required">*</span></label>
+            <input type="text" id="ana-name" placeholder="例：Leather Wallet / B09XXXXX" />
+          </div>
+          <div class="form-group">
+            <label>ASIN 或 URL（可选）</label>
+            <input type="text" id="ana-asin" placeholder="例：B09ABCDEF1 或 amazon.com/..." />
+          </div>
+          <div class="form-group">
+            <label>分析维度</label>
+            <div class="platform-selector">
+              <label class="check-item"><input type="checkbox" checked /> 卖点对比</label>
+              <label class="check-item"><input type="checkbox" checked /> 定价分析</label>
+              <label class="check-item"><input type="checkbox" checked /> 差异化建议</label>
+            </div>
+          </div>
+          <button class="btn-primary" id="btnGenAnalysis">
+            <span class="btn-icon">✨</span> 开始分析
+          </button>
+        </div>
+
+        <div class="card result-card">
+          <h3 class="card-title">📊 分析报告</h3>
+          <div class="result-placeholder" id="anaResultPlaceholder">
+            <div class="placeholder-icon">📊</div>
+            <p>填写左侧参数后点击「开始分析」</p>
+          </div>
+          <div class="analysis-result hidden" id="analysisResult"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== HISTORY PANEL ===== -->
+  <div class="history-panel hidden" id="historyPanel">
+    <div class="history-panel-header">
+      <h3>📜 历史记录</h3>
+      <button class="history-close" id="btnCloseHistory">✕</button>
+    </div>
+    <div class="history-panel-body" id="historyList"></div>
+    <div class="history-panel-empty hidden" id="historyEmpty">暂无历史记录</div>
+    <div class="history-panel-footer">
+      <button class="history-clear-btn" id="btnClearHistory">🗑 清空全部</button>
+    </div>
+  </div>
+  <div class="history-overlay hidden" id="historyOverlay"></div>
+
+  <script>
+    (function() {
+      if (!['localhost', '127.0.0.1'].includes(window.location.hostname)) {
+        var s = document.createElement('script');
+        s.src = 'cloud-api.js';
+        document.currentScript.parentNode.insertBefore(s, document.currentScript.nextSibling);
+      }
+    })();
+  </script>
+  <script src="app.js"></script>
+</body>
+</html>
