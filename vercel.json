@@ -1,16 +1,18 @@
 {
   "version": 2,
-  "framework": null,
-  "outputDirectory": "public",
+  "routes": [
+    { "src": "/api/chat", "dest": "/api/chat.js" },
+    { "src": "/api/image", "dest": "/api/image.js" },
+    { "src": "/api/health", "dest": "/api/health.js" },
+    { "src": "/", "dest": "/public/index.html" },
+    { "src": "/app.js", "dest": "/public/app.js" },
+    { "src": "/styles.css", "dest": "/public/styles.css" },
+    { "src": "/cloud-api.js", "dest": "/public/cloud-api.js" },
+    { "src": "/(.*)", "dest": "/public/$1" }
+  ],
   "functions": {
-    "api/health.js": {
-      "maxDuration": 10
-    },
-    "api/chat.js": {
-      "maxDuration": 30
-    },
-    "api/image.js": {
-      "maxDuration": 60
-    }
+    "api/health.js": { "maxDuration": 10 },
+    "api/chat.js": { "maxDuration": 30 },
+    "api/image.js": { "maxDuration": 60 }
   }
 }
